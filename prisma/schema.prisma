@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id       Int      @id @default(autoincrement())
+  name     String
+  price    Decimal  @db.Decimal(10, 2)
+  createdt DateTime @default(now())
+
+  transactions Transaction[]
+}
+
+enum TransactionMethod {
+  PIX
+  CREDIT_CARD
+  DEBIT_CARD
+  MONEY
+  BOLETO
+}
+
+model Transaction {
+  id        Int               @id @default(autoincrement())
+  value     Decimal           @db.Decimal(10, 2)
+  method    TransactionMethod
+  productId Int
+  createdt  DateTime          @default(now())
+
+  product Product @relation(fields: [productId], references: [id])
+}
