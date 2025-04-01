@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
 
 	try { 
     const answer = await generateText({
-      model: openai("gpt-4o-mini"),
+      model: openai("gpt-4o"),
       prompt: `Gere a consulta necessária para recuperar os dados que o usuário deseja: ${body.message}`,
       system: `
         Você é um assistente de I.A. responsável por responder dúvidas sobre um evento de programação.
